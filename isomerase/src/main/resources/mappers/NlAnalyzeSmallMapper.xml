@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isomerase.mapper.NlAnalyzeSmallMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isomerase.bean.NlAnalyzeSmall">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ae_id" jdbcType="VARCHAR" property="aeId" />
+    <result column="as_id" jdbcType="VARCHAR" property="asId" />
+    <result column="ms_id" jdbcType="VARCHAR" property="msId" />
+    <result column="ms_name" jdbcType="VARCHAR" property="msName" />
+    <result column="qs_id" jdbcType="VARCHAR" property="qsId" />
+    <result column="qs_field" jdbcType="VARCHAR" property="qsField" />
+    <result column="show_flag" jdbcType="VARCHAR" property="showFlag" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from nl_analyze_small
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.hctech2006.softcup.isomerase.bean.NlAnalyzeSmall">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nl_analyze_small (id, ae_id, as_id, 
+      ms_id, ms_name, qs_id, 
+      qs_field, show_flag)
+    values (#{id,jdbcType=INTEGER}, #{aeId,jdbcType=VARCHAR}, #{asId,jdbcType=VARCHAR}, 
+      #{msId,jdbcType=VARCHAR}, #{msName,jdbcType=VARCHAR}, #{qsId,jdbcType=VARCHAR}, 
+      #{qsField,jdbcType=VARCHAR}, #{showFlag,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.isomerase.bean.NlAnalyzeSmall">
+    update nl_analyze_small
+    set ae_id = #{aeId,jdbcType=VARCHAR},
+      as_id = #{asId,jdbcType=VARCHAR},
+      ms_id = #{msId,jdbcType=VARCHAR},
+      ms_name = #{msName,jdbcType=VARCHAR},
+      qs_id = #{qsId,jdbcType=VARCHAR},
+      qs_field = #{qsField,jdbcType=VARCHAR},
+      show_flag = #{showFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, ae_id, as_id, ms_id, ms_name, qs_id, qs_field, show_flag
+    from nl_analyze_small
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, ae_id, as_id, ms_id, ms_name, qs_id, qs_field, show_flag
+    from nl_analyze_small
+  </select>
+</mapper>

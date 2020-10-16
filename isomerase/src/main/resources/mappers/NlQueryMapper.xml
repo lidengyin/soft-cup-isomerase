@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isomerase.mapper.NlQueryMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isomerase.bean.NlQuery">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ds_id" jdbcType="VARCHAR" property="dsId" />
+    <result column="qu_id" jdbcType="VARCHAR" property="quId" />
+    <result column="qu_name" jdbcType="VARCHAR" property="quName" />
+    <result column="qu_type" jdbcType="VARCHAR" property="quType" />
+    <result column="qu_result" jdbcType="VARCHAR" property="quResult" />
+    <result column="qu_url" jdbcType="VARCHAR" property="quUrl" />
+    <result column="qu_time" jdbcType="TIMESTAMP" property="quTime" />
+    <result column="qu_params" jdbcType="VARCHAR" property="quParams" />
+    <result column="qu_algo" jdbcType="VARCHAR" property="quAlgo" />
+    <result column="show_flag" jdbcType="VARCHAR" property="showFlag" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from nl_query
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.hctech2006.softcup.isomerase.bean.NlQuery">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nl_query (id, ds_id, qu_id, 
+      qu_name, qu_type, qu_result, 
+      qu_url, qu_time, qu_params, 
+      qu_algo, show_flag)
+    values (#{id,jdbcType=INTEGER}, #{dsId,jdbcType=VARCHAR}, #{quId,jdbcType=VARCHAR}, 
+      #{quName,jdbcType=VARCHAR}, #{quType,jdbcType=VARCHAR}, #{quResult,jdbcType=VARCHAR}, 
+      #{quUrl,jdbcType=VARCHAR}, #{quTime,jdbcType=TIMESTAMP}, #{quParams,jdbcType=VARCHAR}, 
+      #{quAlgo,jdbcType=VARCHAR}, #{showFlag,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.isomerase.bean.NlQuery">
+    update nl_query
+    set ds_id = #{dsId,jdbcType=VARCHAR},
+      qu_id = #{quId,jdbcType=VARCHAR},
+      qu_name = #{quName,jdbcType=VARCHAR},
+      qu_type = #{quType,jdbcType=VARCHAR},
+      qu_result = #{quResult,jdbcType=VARCHAR},
+      qu_url = #{quUrl,jdbcType=VARCHAR},
+      qu_time = #{quTime,jdbcType=TIMESTAMP},
+      qu_params = #{quParams,jdbcType=VARCHAR},
+      qu_algo = #{quAlgo,jdbcType=VARCHAR},
+      show_flag = #{showFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, ds_id, qu_id, qu_name, qu_type, qu_result, qu_url, qu_time, qu_params, 
+    qu_algo, show_flag
+    from nl_query
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, ds_id, qu_id, qu_name, qu_type, qu_result, qu_url, qu_time, qu_params, 
+    qu_algo, show_flag
+    from nl_query
+  </select>
+</mapper>

@@ -1,0 +1,94 @@
+
+server:
+  port: 8215
+spring:
+  application:
+    name: user-server
+  cloud:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 100000000
+      max-request-size: 100000000
+      resolve-lazily: false
+  boot:
+    admin:
+      client:
+        url: "http://172.17.0.1:8213"
+        instance:
+          service-base-url: "http://172.17.0.1:8215"
+  mail:
+    host: smtp.163.com
+    port: 465
+    username: haichuang04014@163.com
+    password: FANBLBVLETTWHLUM
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+        debug: false
+  datasource:
+    name: druidDataSource
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://172.17.0.1:3306/soft_cup_1?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      filters: stat, wall, config
+      initial-size: 1
+      max-active: 100
+      max-wait: 60000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 50
+      max-pool-prepared-statement-per-connection-size: 20
+      username: root
+      password: 123456
+#  rabbitmq:
+#    username: guest
+#    password: guest
+#    port: 5672
+#    publisher-confirms: true
+#    virtual-host: /
+#    host: 172.17.0.1
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+mybatis:
+  mapper-locations: classpath:/mappers/*Mapper.xml
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 500000
+        readTimeout: 500000
+        loggerLevel: basic
+#解决Feign请求超时问题
+#hystrix的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 180000 #三分钟
+ribbon:
+  ReadTimeOut: 180000
+  SocketTimeOut: 180000

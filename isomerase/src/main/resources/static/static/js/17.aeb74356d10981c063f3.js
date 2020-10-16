@@ -1,0 +1,2 @@
+webpackJsonp([17],{"L2d/":function(e,t){},"Z/FV":function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement,t=this._self._c||e;return t("div",{staticClass:"myCourse"},[t("transition",{attrs:{name:"component-fade",mode:"out-in"}},[t("router-view")],1)],1)},staticRenderFns:[]};var s=n("VU/8")({name:""},r,!1,function(e){n("L2d/")},null,null);t.default=s.exports}});
+//# sourceMappingURL=17.aeb74356d10981c063f3.js.map

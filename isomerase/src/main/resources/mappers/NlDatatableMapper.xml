@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isomerase.mapper.NlDatatableMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isomerase.bean.NlDatatable">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="db_id" jdbcType="VARCHAR" property="dbId" />
+    <result column="dt_id" jdbcType="VARCHAR" property="dtId" />
+    <result column="dt_name" jdbcType="VARCHAR" property="dtName" />
+    <result column="dt_time" jdbcType="TIMESTAMP" property="dtTime" />
+    <result column="show_flag" jdbcType="VARCHAR" property="showFlag" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from nl_datatable
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.hctech2006.softcup.isomerase.bean.NlDatatable">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nl_datatable (id, db_id, dt_id, 
+      dt_name, dt_time, show_flag
+      )
+    values (#{id,jdbcType=INTEGER}, #{dbId,jdbcType=VARCHAR}, #{dtId,jdbcType=VARCHAR}, 
+      #{dtName,jdbcType=VARCHAR}, #{dtTime,jdbcType=TIMESTAMP}, #{showFlag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.isomerase.bean.NlDatatable">
+    update nl_datatable
+    set db_id = #{dbId,jdbcType=VARCHAR},
+      dt_id = #{dtId,jdbcType=VARCHAR},
+      dt_name = #{dtName,jdbcType=VARCHAR},
+      dt_time = #{dtTime,jdbcType=TIMESTAMP},
+      show_flag = #{showFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, db_id, dt_id, dt_name, dt_time, show_flag
+    from nl_datatable
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, db_id, dt_id, dt_name, dt_time, show_flag
+    from nl_datatable
+  </select>
+</mapper>

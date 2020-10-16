@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isomodel.mapper.NlModelSmallMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isomodel.bean.NlModelSmall">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ml_id" jdbcType="VARCHAR" property="mlId" />
+    <result column="ms_id" jdbcType="VARCHAR" property="msId" />
+    <result column="ms_name" jdbcType="VARCHAR" property="msName" />
+    <result column="ms_intro" jdbcType="VARCHAR" property="msIntro" />
+    <result column="show_flag" jdbcType="VARCHAR" property="showFlag" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from nl_model_small
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.hctech2006.softcup.isomodel.bean.NlModelSmall">
+
+    insert into nl_model_small (id, ml_id, ms_id, 
+      ms_name, ms_intro, show_flag
+      )
+    values (#{id,jdbcType=INTEGER}, #{mlId,jdbcType=VARCHAR}, #{msId,jdbcType=VARCHAR}, 
+      #{msName,jdbcType=VARCHAR}, #{msIntro,jdbcType=VARCHAR}, #{showFlag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.isomodel.bean.NlModelSmall">
+    update nl_model_small
+    set ml_id = #{mlId,jdbcType=VARCHAR},
+      ms_id = #{msId,jdbcType=VARCHAR},
+      ms_name = #{msName,jdbcType=VARCHAR},
+      ms_intro = #{msIntro,jdbcType=VARCHAR},
+      show_flag = #{showFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, ml_id, ms_id, ms_name, ms_intro, show_flag
+    from nl_model_small
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, ml_id, ms_id, ms_name, ms_intro, show_flag
+    from nl_model_small
+  </select>
+  <select id="selectByMlId" parameterType="String" resultMap="BaseResultMap">
+    select
+        id, ml_id, ms_id, ms_name, ms_intro, show_flag
+    from nl_model_small where ml_id=#{mlId}
+  </select>
+  <select id="selectByMsName" parameterType="String" resultMap="BaseResultMap">
+    select
+        id, ml_id, ms_id, ms_name, ms_intro, show_flag
+    from nl_model_small where ms_name=#{msName}
+  </select>
+  <delete id="deleteByMlId" parameterType="String">
+    delete from nl_model_small where ml_id=#{mlId}
+  </delete>
+</mapper>

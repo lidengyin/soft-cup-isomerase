@@ -1,0 +1,57 @@
+server:
+  port: 8212 #端口
+spring:
+  application:
+    name: uaa-server #服务名
+  cloud:
+    consul: #服务发现
+      host: 172.17.0.1
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        health-check-url: http://172.17.0.1:8212/actuator/health
+        hostname: localhost
+  zipkin:
+    base-url: http://127.17.0.1:9411/
+  sleuth:
+    sampler:
+      probability: 1
+  boot:
+    admin:
+      client:
+        url: "http://172.17.0.1:8213"
+        instance:
+          service-base-url: "http://172.17.0.1:8213"
+
+  datasource: #数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql:///soft_cup_user?useUnicode=true&characterEncoding=UTF8&serverTime=Asia/Shanghai
+      filters: stat, wall, config
+      initial-size: 1
+      max-active: 100
+      max-wait: 60000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 50
+      max-pool-prepared-statement-per-connection-size: 20
+      username: root
+      password: 123456
+    name: druidDataSource
+mybatis: #MyBatis持久层框架
+  mapper-locations: classpath:/mappers/*Mapper.xml
+management: #健康监控暴露
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'

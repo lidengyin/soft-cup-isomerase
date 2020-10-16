@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>127.0.0.1:4560</destination>
+        <!-- 日志输出编码 -->
+        <encoder charset="UTF-8"
+                 class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "logLevel": "%level",
+                        "serviceName": "${springAppName:-}",
+                        "pid": "${PID:-}",
+                        "thread": "%thread",
+                        "class": "%logger{40}",
+                        "rest": "%message"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="LOGSTASH" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+<!--    &lt;!&ndash;输出到logstash的appender&ndash;&gt;-->
+<!--    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+<!--        <destination>127.17.0.1:4560</destination>-->
+<!--        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" />-->
+<!--    </appender>-->
+
+<!--    &lt;!&ndash; 日志输出级别 &ndash;&gt;-->
+<!--    <root level="${levelService}">-->
+<!--        <appender-ref ref="STDOUT" />-->
+<!--        <appender-ref ref="FILE" />-->
+<!--        <appender-ref ref="LOGSTASH"/> &lt;!&ndash;输出到logstash&ndash;&gt;-->
+<!--    </root>-->
+</configuration>

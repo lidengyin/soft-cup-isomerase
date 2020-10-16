@@ -1,0 +1,50 @@
+server:
+  #port: 8414 #服务器端口
+  port: 8214 #服务器端口
+spring:
+  application:
+    name: config-server  #工程名
+  cloud:
+    consul:
+      host: 172.17.0.1 #注册源
+      port: 8500 #注册端口
+      discovery:
+        service-name: ${spring.application.name}
+        #注册到Consul的服务名称
+        health-check-url: http://172.17.0.1:8214/actuator/health
+        hostname: 172.17.0.1
+
+    config:
+      label: master #git仓库分支
+      server:
+        git:
+          uri: https://gitee.com/li_deng_yin/config-repo.git #p配置git仓库地址
+          search-paths: config-repo #git仓库地址下的相对地址，可配置多个，用逗号分隔
+          username: 18354131190 #git仓库帐号
+          password: li19991024124 #git仓库密码
+          force-pull: true
+
+
+  boot:
+    admin:
+      client:
+        url: "http://172.17.0.1:8213"
+        instance:
+          service-base-url: "http://172.17.0.1:8214"
+  rabbitmq:
+    host: 172.17.0.1
+    port: 5672
+    username: guest
+    password: guest
+
+
+#开放健康检查多口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+#注册中心Admin ends

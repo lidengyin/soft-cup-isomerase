@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isodatafield.mapper.NlFieldMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isodatafield.bean.NlField">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="fd_id" jdbcType="VARCHAR" property="fdId" />
+    <result column="dt_id" jdbcType="VARCHAR" property="dtId" />
+    <result column="db_id" jdbcType="VARCHAR" property="dbId" />
+    <result column="fd_comment" jdbcType="VARCHAR" property="fdComment" />
+    <result column="fd_name" jdbcType="VARCHAR" property="fdName" />
+    <result column="fd_type" jdbcType="VARCHAR" property="fdType" />
+    <result column="fd_time" jdbcType="TIMESTAMP" property="fdTime" />
+    <result column="show_flag" jdbcType="VARCHAR" property="showFlag" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from nl_field
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.hctech2006.softcup.isodatafield.bean.NlField">
+
+    insert into nl_field (id, fd_id, dt_id, 
+      db_id, fd_comment, fd_name, 
+      fd_time, show_flag,fd_type)
+    values (#{id,jdbcType=INTEGER}, #{fdId,jdbcType=VARCHAR}, #{dtId,jdbcType=VARCHAR}, 
+      #{dbId,jdbcType=VARCHAR}, #{fdComment,jdbcType=VARCHAR}, #{fdName,jdbcType=VARCHAR}, 
+      #{fdTime,jdbcType=TIMESTAMP}, #{showFlag,jdbcType=VARCHAR},  #{fdType,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.isodatafield.bean.NlField">
+    update nl_field
+    set fd_id = #{fdId,jdbcType=VARCHAR},
+      dt_id = #{dtId,jdbcType=VARCHAR},
+      db_id = #{dbId,jdbcType=VARCHAR},
+      fd_comment = #{fdComment,jdbcType=VARCHAR},
+      fd_name = #{fdName,jdbcType=VARCHAR},
+      fd_time = #{fdTime,jdbcType=TIMESTAMP},
+      show_flag = #{showFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, fd_id, dt_id, db_id, fd_comment, fd_name, fd_time, show_flag
+    from nl_field
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, fd_id, dt_id, db_id, fd_comment, fd_name, fd_time, show_flag
+    from nl_field
+  </select>
+  <select id="selectByFdId" parameterType="String" resultMap="BaseResultMap">
+    select
+        id, fd_id, dt_id, db_id, fd_comment, fd_name, fd_time, show_flag, fd_type
+    from nl_field where fd_id=#{fdId};
+  </select>
+  <select id="selectByDtId" parameterType="String" resultMap="BaseResultMap">
+    select
+        id, fd_id, dt_id, db_id, fd_comment, fd_name, fd_time, show_flag, fd_type
+    from nl_field where dt_id=#{dtId}
+  </select>
+  <update id="updateByFlId" parameterType="cn.hctech2006.softcup.isodatafield.bean.NlField">
+    update nl_field
+    set
+        <if test="fdId != null and fdId != ''">
+          fd_id = #{fdId,jdbcType=VARCHAR},
+        </if>
+        <if test="dtId != null and dtId != ''">
+          dt_id = #{dtId,jdbcType=VARCHAR},
+        </if>
+        <if test="dbId != null and dbId != ''">
+          db_id = #{dbId,jdbcType=VARCHAR},
+        </if>
+        <if test="fdComment != null and fdComment != ''">
+          fd_comment = #{fdComment,jdbcType=VARCHAR},
+        </if>
+        <if test="fdName != null and fdName != ''">
+          fd_name = #{fdName,jdbcType=VARCHAR},
+        </if>
+        <if test="showFlag != null and showFlag != ''">
+          show_flag = #{showFlag,jdbcType=VARCHAR},
+        </if>
+        <if test="fdType != null and fdType != ''">
+          fd_type = #{fdType},
+
+        </if>
+        fd_id = #{fdId,jdbcType=VARCHAR}
+    where fd_id = #{fdId,jdbcType=VARCHAR}
+  </update>
+</mapper>

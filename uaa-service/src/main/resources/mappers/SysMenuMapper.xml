@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.uaaservice.mapper.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.uaaservice.bean.SysMenu">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="perms" jdbcType="VARCHAR" property="perms" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+    <result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_menu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.hctech2006.softcup.uaaservice.bean.SysMenu">
+    insert into sys_menu (id, parent_id, name, 
+      perms, create_by, create_time, 
+      last_update_time, last_update_by, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{perms,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, #{delFlag,jdbcType=TINYINT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.uaaservice.bean.SysMenu">
+    update sys_menu
+    set parent_id = #{parentId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      perms = #{perms,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, parent_id, name, perms, create_by, create_time, last_update_time, last_update_by, 
+    del_flag
+    from sys_menu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, parent_id, name, perms, create_by, create_time, last_update_time, last_update_by, 
+    del_flag
+    from sys_menu
+  </select>
+  <select id="selectMenusByUsername" parameterType="String" resultMap="BaseResultMap">
+    select
+        m.id, m.parent_id, m.name, m.perms, m.create_by, m.create_time, m.last_update_time, m.last_update_by, m.del_flag
+    from sys_menu m, sys_role_menu rm, sys_user_role ur  , sys_user u
+    where m.id = rm.menu_id and rm.role_id=ur.role_id and ur.user_id=u.id and u.name=#{username}
+  </select>
+</mapper>

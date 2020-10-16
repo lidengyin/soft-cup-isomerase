@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isomerase.mapper.NlDatasourceMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isomerase.bean.NlDatasource">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mainId" jdbcType="VARCHAR" property="mainid" />
+    <result column="field" jdbcType="VARCHAR" property="field" />
+    <result column="datatable" jdbcType="VARCHAR" property="datatable" />
+    <result column="params" jdbcType="VARCHAR" property="params" />
+    <result column="chart_type" jdbcType="VARCHAR" property="chartType" />
+    <result column="chart_option" jdbcType="VARCHAR" property="chartOption" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from nl_datasource
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.hctech2006.softcup.isomerase.bean.NlDatasource">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nl_datasource (id, mainId, field, 
+      datatable, params, chart_type, 
+      chart_option)
+    values (#{id,jdbcType=INTEGER}, #{mainid,jdbcType=VARCHAR}, #{field,jdbcType=VARCHAR}, 
+      #{datatable,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, #{chartType,jdbcType=VARCHAR}, 
+      #{chartOption,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.isomerase.bean.NlDatasource">
+    update nl_datasource
+    set mainId = #{mainid,jdbcType=VARCHAR},
+      field = #{field,jdbcType=VARCHAR},
+      datatable = #{datatable,jdbcType=VARCHAR},
+      params = #{params,jdbcType=VARCHAR},
+      chart_type = #{chartType,jdbcType=VARCHAR},
+      chart_option = #{chartOption,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, mainId, field, datatable, params, chart_type, chart_option
+    from nl_datasource
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, mainId, field, datatable, params, chart_type, chart_option
+    from nl_datasource
+  </select>
+</mapper>

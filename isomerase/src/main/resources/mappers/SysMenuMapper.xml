@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isomerase.mapper.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isomerase.bean.SysMenu">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="perms" jdbcType="VARCHAR" property="perms" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+    <result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_menu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.hctech2006.softcup.isomerase.bean.SysMenu">
+
+    insert into sys_menu (id, parent_id, name, 
+      perms, create_by, create_time, 
+      last_update_time, last_update_by, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+      #{perms,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, #{delFlag,jdbcType=TINYINT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.isomerase.bean.SysMenu">
+    update sys_menu
+    set
+    <if test="parentId != null and parentId != ''">
+      parent_id = #{parentId,jdbcType=BIGINT},
+    </if>
+    <if test="name != null and name != ''">
+      name = #{name,jdbcType=VARCHAR},
+    </if>
+    <if test="perms != null and perms != ''">
+      perms = #{perms,jdbcType=VARCHAR},
+    </if>
+    <if test="createBy != null and createBy != ''">
+      create_by = #{createBy,jdbcType=VARCHAR},
+    </if>
+    <if test="createTime != null">
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="lastUpdateTime != null">
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="lastUpdateBy != null and lastUpdateBy != ''">
+      last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+    </if>
+    <if test="delFlag != null and delFlag != ''">
+      del_flag = #{delFlag,jdbcType=TINYINT},
+    </if>
+    id = #{id}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, parent_id, name, perms, create_by, create_time, last_update_time, last_update_by, 
+    del_flag
+    from sys_menu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" parameterType="cn.hctech2006.softcup.isomerase.bean.SysMenu" resultMap="BaseResultMap">
+    select id, parent_id, name, perms, create_by, create_time, last_update_time, last_update_by, 
+    del_flag
+    from sys_menu
+    where 1=1
+    <if test="id != null and id != ''">
+      and id = #{id}
+    </if>
+    <if test="parentId != null and parentId != ''">
+      and parent_id = #{parentId}
+    </if>
+    <if test="name != null and name != ''">
+      and name like concat('%',#{name},'%')
+    </if>
+    <if test="perms != null and perms != ''">
+      and perms = #{perms}
+    </if>
+    <if test="delFlag != null">
+      and del_flag = #{delFlag}
+    </if>
+  </select>
+  <select id="selectByRoleId"  resultMap="BaseResultMap">
+    select
+    sm.id, sm.parent_id, sm.name, sm.perms, sm.create_by, sm.del_flag
+from sys_menu sm
+    inner join sys_role_menu srm
+    on sm.id = srm.menu_id
+    where srm.role_id = #{roleId}
+  </select>
+
+</mapper>

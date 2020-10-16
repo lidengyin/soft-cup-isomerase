@@ -1,0 +1,123 @@
+
+server:
+  port: 8316
+  #port: 8416
+#  ssl:
+#    key-store: classpath:server.jks
+#    key-store-password: Qh7#1IUWwQERhI3k
+spring:
+  application:
+    name: iso-analyze
+  cloud:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 1000000000
+      max-request-size: 1000000000
+      resolve-lazily: false
+  boot:
+    admin:
+      client:
+        url: "http://172.17.0.1:8216"
+        instance:
+          service-base-url: "http://172.17.0.1:8316"
+  zipkin:
+    base-url: http://127.17.0.1:9411/
+  sleuth:
+    sampler:
+      probability: 1
+  mail:
+    host: smtp.163.com
+    port: 465
+    username: haichuang04014@163.com
+    password: FANBLBVLETTWHLUM
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+        debug: false
+  datasource:
+    name: druidDataSource
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://172.17.0.1:3306/soft_cup_analyze?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      filters: stat, wall, config
+      initial-size: 1
+      max-active: 100
+      max-wait: 60000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 50
+      max-pool-prepared-statement-per-connection-size: 20
+      username: root
+      password: 123456
+  #Redis配置
+  redis:
+    database: 0 #制定链接数据库,Redis制定了编号为0-15的16个数据库
+    host: 172.17.0.1 #服务端所在地址
+
+    port: 6379 #服务端使用端口,默认6379
+    jedis:
+      pool:
+        max-active: 10 #制定连接池最大活跃的连接数,-1表示无限,默认是8
+        max-idle: 5 #指定连接池最大空闲连接数,-1标识无限,默认是8
+        max-wait: 2000
+        #指的是当连接池耗尽时,重新获取链接需要等待的最大时间,以毫米为单位,-1标识无限等待
+        min-idle: 5 #指的是最小空闲连接数,-1标识无限,默认是8
+    timeout: 1000 #链接超时时间,-1标识无限,默认是0
+  cache:
+    type: redis #制定缓存提供者
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+mybatis:
+  mapper-locations: classpath:/mappers/*Mapper.xml
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 500000
+        readTimeout: 500000
+        loggerLevel: basic
+#解决Feign请求超时问题
+#hystrix的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 180000 #三分钟
+ribbon:
+  ReadTimeOut: 180000
+  SocketTimeOut: 180000
+
+#日志配置
+logging:
+#  level:
+#    root: DEBUG
+#    org:
+#      springframework: DEBUG
+#      mybatis: DEBUG
+  config: classpath:logback-spring.xml

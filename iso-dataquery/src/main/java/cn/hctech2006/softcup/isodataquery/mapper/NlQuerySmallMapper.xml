@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isodataquery.mapper.NlQuerySmallMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isodataquery.bean.NlQuerySmall">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="qu_id" jdbcType="VARCHAR" property="quId" />
+    <result column="fd_id" jdbcType="VARCHAR" property="fdId" />
+    <result column="dt_name" jdbcType="VARCHAR" property="dtName" />
+    <result column="db_database" jdbcType="VARCHAR" property="dbDatabase" />
+    <result column="db_type" jdbcType="VARCHAR" property="dbType" />
+    <result column="qs_id" jdbcType="VARCHAR" property="qsId" />
+    <result column="qs_field" jdbcType="VARCHAR" property="qsField" />
+    <result column="qs_params" jdbcType="VARCHAR" property="qsParams" />
+    <result column="qs_chart_type" jdbcType="VARCHAR" property="qsChartType" />
+    <result column="qs_chart_option" jdbcType="VARCHAR" property="qsChartOption" />
+  </resultMap>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.hctech2006.softcup.isodataquery.bean.NlQuerySmall">
+
+    insert into nl_query_small (id, qu_id, qs_id, 
+      qs_field, qs_params, qs_chart_type, 
+      qs_chart_option, dt_name, db_type, db_database, fd_id)
+    values (#{id,jdbcType=INTEGER}, #{quId,jdbcType=VARCHAR}, #{qsId,jdbcType=VARCHAR},
+      #{qsField,jdbcType=VARCHAR}, #{qsParams,jdbcType=VARCHAR}, #{qsChartType,jdbcType=VARCHAR}, 
+      #{qsChartOption,jdbcType=VARCHAR}, #{dtName, jdbcType=VARCHAR}, #{dbType, jdbcType=VARCHAR}
+      , #{dbDatabase, jdbcType=VARCHAR}, #{fdId, jdbcType=VARCHAR})
+
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, qu_id, qs_id, qs_field, qs_params, qs_chart_type, qs_chart_option,dt_name, db_type,db_database, fd_id
+    from nl_query_small
+  </select>
+  <select id="selectByQuId" parameterType="String" resultMap="BaseResultMap">
+    select
+        id, db_database, fd_id, qs_field, qu_id, qs_id, qs_params, qs_chart_type, qs_chart_option, dt_name, db_type
+    from nl_query_small where qu_id=#{quId}
+  </select>
+</mapper>

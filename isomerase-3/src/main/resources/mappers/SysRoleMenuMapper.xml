@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isomerase.mapper.SysRoleMenuMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isomerase.bean.SysRoleMenu">
+    <id column="role_id" jdbcType="BIGINT" property="roleId" />
+    <id column="menu_id" jdbcType="BIGINT" property="menuId" />
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+    <result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="Long">
+    delete from sys_role_menu
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.hctech2006.softcup.isomerase.bean.SysRoleMenu">
+    insert into sys_role_menu (role_id, menu_id, id, 
+      create_by, create_time, last_update_time, 
+      last_update_by, del_flag)
+    values (#{roleId,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT}, #{id,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateBy,jdbcType=VARCHAR}, #{delFlag,jdbcType=TINYINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.isomerase.bean.SysRoleMenu">
+    update sys_role_menu
+    set
+    <if test="id != null and id != ''">
+      id = #{id,jdbcType=VARCHAR},
+    </if>
+
+    <if test="createBy != null and createBy != ''">
+      create_by = #{createBy,jdbcType=VARCHAR},
+    </if>
+    <if test="createTime != null">
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="lastUpdateTime != null">
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="lastUpdateBy != null and lastUpdateBy != ''">
+      last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+    </if>
+    <if test="delFlag != null and delFlag != ''">
+      del_flag = #{delFlag,jdbcType=TINYINT}
+    </if>
+    where
+          1=1
+          <if test="roleId != null and roleId != ''">
+            and role_id = #{roleId,jdbcType=BIGINT}
+          </if>
+          <if test="menuId != null and menuId != ''">
+            and menu_id = #{menuId,jdbcType=BIGINT}
+          </if>
+
+  </update>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select role_id, menu_id, id, create_by, create_time, last_update_time, last_update_by, 
+    del_flag
+    from sys_role_menu
+    where role_id = #{roleId,jdbcType=BIGINT}
+      and menu_id = #{menuId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select role_id, menu_id, id, create_by, create_time, last_update_time, last_update_by, 
+    del_flag
+    from sys_role_menu
+  </select>
+</mapper>

@@ -1,0 +1,61 @@
+server:
+  port: 8216
+spring:
+  application:
+    name: consumer-server
+  boot:
+    admin:
+      client:
+        url: "http://172.17.0.1:8213"
+        instance:
+          service-base-url: "http://172.17.0.1:8216"
+  cloud:
+    consul:
+      host: 172.17.0.1
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        hostname: 172.17.0.1
+        health-check-url: http://172.17.0.1:8216/actuator/health
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+      resolve-lazily: false
+  zipkin:
+    base-url: http://127.17.0.1:9411/
+  sleuth:
+    sampler:
+      probability: 1
+#解决Feign请求超时问题
+#hystrix的超时时间
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 360000
+        readTimeout: 360000
+        loggerLevel: basic
+  hystrix:
+
+    enabled: true
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#解决Feign请求超时问题
+#hystrix的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 360000 #三分钟
+

@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: iso-datafield
+  cloud:
+    consul:
+      host: 172.17.0.1
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        hostname: 172.17.0.1
+        health-check-url: http://172.17.0.1:8313/actuator/health
+#    config:
+#        discovery:
+#          enabled: true
+#          service-id: config-server
+#        name: isodataquery
+#        profile: dev
+#        label: master
+#        fail-fast: true
+  rabbitmq:
+    username: guest
+    password: guest
+    port: 5672
+    #publisher-confirms: true
+    virtual-host: /
+    host: 172.17.0.1

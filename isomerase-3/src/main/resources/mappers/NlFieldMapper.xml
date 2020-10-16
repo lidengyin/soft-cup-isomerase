@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isomerase.mapper.NlFieldMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isomerase.bean.NlField">
+    <id column="filed_id" jdbcType="VARCHAR" property="filedId" />
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="main_id" jdbcType="VARCHAR" property="mainId" />
+    <result column="field_name" jdbcType="VARCHAR" property="fieldName" />
+    <result column="field_value" jdbcType="VARCHAR" property="fieldValue" />
+    <result column="table_name" jdbcType="VARCHAR" property="tableName" />
+    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from nl_field
+    where filed_id = #{filedId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.hctech2006.softcup.isomerase.bean.NlField">
+    insert into nl_field (filed_id, id, main_id, 
+      field_name, field_value, table_name, 
+      del_flag)
+    values (#{filedId,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{mainId,jdbcType=VARCHAR}, 
+      #{fieldName,jdbcType=VARCHAR}, #{fieldValue,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR}, 
+      #{delFlag,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.isomerase.bean.NlField">
+    update nl_field
+    set id = #{id,jdbcType=INTEGER},
+      main_id = #{mainId,jdbcType=VARCHAR},
+      field_name = #{fieldName,jdbcType=VARCHAR},
+      field_value = #{fieldValue,jdbcType=VARCHAR},
+      table_name = #{tableName,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=VARCHAR}
+    where filed_id = #{filedId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select filed_id, id, main_id, field_name, field_value, table_name, del_flag
+    from nl_field
+    where filed_id = #{filedId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select filed_id, id, main_id, field_name, field_value, table_name, del_flag
+    from nl_field
+  </select>
+  <select id="selectByMainId" parameterType="String" resultMap="BaseResultMap">
+    select
+         field_name, field_value
+    from nl_field  where 1=1
+    <if test="mainId != null and mainId != ''">
+      and main_id=#{mainId}
+    </if>
+        group by field_name, field_value
+  </select>
+  <select id="selectFieldNameByMainId" parameterType="String" resultType="String">
+    select distinct field_name from nl_field where main_id=#{mainId}
+  </select>
+  <select id="selectFieldValueByMainIdAndFieldName" parameterType="list" resultType="String">
+    select distinct field_value from nl_field where main_id=#{mainId} and field_name=#{fieldName}
+  </select>
+</mapper>

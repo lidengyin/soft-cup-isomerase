@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isomerase.mapper.NlFieldMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isomerase.bean.NlField">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="fd_id" jdbcType="VARCHAR" property="fdId" />
+    <result column="dt_id" jdbcType="VARCHAR" property="dtId" />
+    <result column="db_id" jdbcType="VARCHAR" property="dbId" />
+    <result column="fd_comment" jdbcType="VARCHAR" property="fdComment" />
+    <result column="fd_name" jdbcType="VARCHAR" property="fdName" />
+    <result column="fd_time" jdbcType="VARCHAR" property="fdTime" />
+    <result column="show_flag" jdbcType="VARCHAR" property="showFlag" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from nl_field
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.hctech2006.softcup.isomerase.bean.NlField">
+
+    insert into nl_field (id, fd_id, dt_id, 
+      db_id, fd_comment, fd_name, 
+      fd_time, show_flag)
+    values (#{id,jdbcType=INTEGER}, #{fdId,jdbcType=VARCHAR}, #{dtId,jdbcType=VARCHAR}, 
+      #{dbId,jdbcType=VARCHAR}, #{fdComment,jdbcType=VARCHAR}, #{fdName,jdbcType=VARCHAR}, 
+      #{fdTime,jdbcType=VARCHAR}, #{showFlag,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.isomerase.bean.NlField">
+    update nl_field
+    set fd_id = #{fdId,jdbcType=VARCHAR},
+      dt_id = #{dtId,jdbcType=VARCHAR},
+      db_id = #{dbId,jdbcType=VARCHAR},
+      fd_comment = #{fdComment,jdbcType=VARCHAR},
+      fd_name = #{fdName,jdbcType=VARCHAR},
+      fd_time = #{fdTime,jdbcType=VARCHAR},
+      show_flag = #{showFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, fd_id, dt_id, db_id, fd_comment, fd_name, fd_time, show_flag
+    from nl_field
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, fd_id, dt_id, db_id, fd_comment, fd_name, fd_time, show_flag
+    from nl_field
+  </select>
+
+</mapper>

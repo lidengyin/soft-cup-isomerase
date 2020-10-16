@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isomerase.mapper.NlQuerySmallMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isomerase.bean.NlQuerySmall">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="qu_id" jdbcType="VARCHAR" property="quId" />
+    <result column="qs_id" jdbcType="INTEGER" property="qsId" />
+    <result column="qs_field" jdbcType="VARCHAR" property="qsField" />
+    <result column="qs_params" jdbcType="VARCHAR" property="qsParams" />
+    <result column="qs_chart_type" jdbcType="VARCHAR" property="qsChartType" />
+    <result column="qs_chart_option" jdbcType="VARCHAR" property="qsChartOption" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.hctech2006.softcup.isomerase.bean.NlQuerySmall">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nl_query_small (id, qu_id, qs_id, 
+      qs_field, qs_params, qs_chart_type, 
+      qs_chart_option)
+    values (#{id,jdbcType=INTEGER}, #{quId,jdbcType=VARCHAR}, #{qsId,jdbcType=INTEGER}, 
+      #{qsField,jdbcType=VARCHAR}, #{qsParams,jdbcType=VARCHAR}, #{qsChartType,jdbcType=VARCHAR}, 
+      #{qsChartOption,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, qu_id, qs_id, qs_field, qs_params, qs_chart_type, qs_chart_option
+    from nl_query_small
+  </select>
+</mapper>

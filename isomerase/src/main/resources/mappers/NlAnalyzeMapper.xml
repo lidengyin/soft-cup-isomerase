@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hctech2006.softcup.isomerase.mapper.NlAnalyzeMapper">
+  <resultMap id="BaseResultMap" type="cn.hctech2006.softcup.isomerase.bean.NlAnalyze">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ae_id" jdbcType="VARCHAR" property="aeId" />
+    <result column="ae_name" jdbcType="VARCHAR" property="aeName" />
+    <result column="ae_result" jdbcType="VARCHAR" property="aeResult" />
+    <result column="ml_id" jdbcType="VARCHAR" property="mlId" />
+    <result column="qu_id" jdbcType="VARCHAR" property="quId" />
+    <result column="alram_flag" jdbcType="VARCHAR" property="alramFlag" />
+    <result column="ae_time" jdbcType="TIMESTAMP" property="aeTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from nl_analyze
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.hctech2006.softcup.isomerase.bean.NlAnalyze">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nl_analyze (id, ae_id, ae_name, 
+      ae_result, ml_id, qu_id, 
+      alram_flag, ae_time)
+    values (#{id,jdbcType=INTEGER}, #{aeId,jdbcType=VARCHAR}, #{aeName,jdbcType=VARCHAR}, 
+      #{aeResult,jdbcType=VARCHAR}, #{mlId,jdbcType=VARCHAR}, #{quId,jdbcType=VARCHAR}, 
+      #{alramFlag,jdbcType=VARCHAR}, #{aeTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.hctech2006.softcup.isomerase.bean.NlAnalyze">
+    update nl_analyze
+    set ae_id = #{aeId,jdbcType=VARCHAR},
+      ae_name = #{aeName,jdbcType=VARCHAR},
+      ae_result = #{aeResult,jdbcType=VARCHAR},
+      ml_id = #{mlId,jdbcType=VARCHAR},
+      qu_id = #{quId,jdbcType=VARCHAR},
+      alram_flag = #{alramFlag,jdbcType=VARCHAR},
+      ae_time = #{aeTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, ae_id, ae_name, ae_result, ml_id, qu_id, alram_flag, ae_time
+    from nl_analyze
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, ae_id, ae_name, ae_result, ml_id, qu_id, alram_flag, ae_time
+    from nl_analyze
+  </select>
+</mapper>

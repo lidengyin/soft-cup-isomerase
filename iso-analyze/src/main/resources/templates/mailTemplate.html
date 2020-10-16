@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>企业异构系统预警邮件</title>
+    <style type="text/css">
+        .warningDiv{
+            text-align: center;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+
+            min-width: 380px;
+            max-width: 500px;
+            padding: 20px 50px;
+            border: 2px solid red;
+
+        }
+        .bigTitle{
+            font-size: 30px;
+            letter-spacing: 4px;
+            color: red;
+        }
+        .contentDiv{
+            text-align: left;
+        }
+        .itemDiv{
+            margin: 15px 0;
+        }
+        .itemDiv>span{
+            display: inline-block;
+            min-width: 116px;
+        }
+        .itemDiv>div,.itemDiv>a{
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="warningDiv">
+    <h1 class="bigTitle">邮件站外预警!!!!</h1>
+    <div class="contentDiv">
+        <div class="itemDiv">
+            <span>大数据分析实例</span>:
+            <div th:text="${analyze.getAeName()}"></div>
+        </div>
+        <div class="itemDiv">
+            <span>模型预警结果</span>:
+            <div th:text="${analyze.getAeResult()}"></div>
+        </div>
+<!--        <div class="itemDiv">-->
+<!--            <span>预警参数</span>:-->
+<!--            <div th:text="${analyzeEmailDTO.getParamName}"></div>-->
+<!--        </div>-->
+<!--        <div class="itemDiv">-->
+<!--            <span>管理界面链接</span>:-->
+<!--            <a href="${analyzeEmailDTO.getAeId}">点击跳转</a>-->
+<!--        </div>-->
+    </div>
+</div>
+</body>
+</html>
